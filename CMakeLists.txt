@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.25)
-project(LearnOpengl VERSION 2.1)
+project(AnimeRenderer VERSION 2.1)
 
 configure_file(TutorialConfig.h.in TutorialConfig.h)
 

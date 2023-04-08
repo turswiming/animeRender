@@ -8,7 +8,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 int main() {
     std::cout << "program start!" << std::endl;
-    std::cout<<"version:\t"<< LearnOpengl_VERSION_MAJOR<<'.'<<LearnOpengl_VERSION_MINOR<<std::endl;
+    std::cout<<"version:\t"<< AnimeRenderer_VERSION_MAJOR<<'.'<<AnimeRenderer_VERSION_MINOR<<std::endl;
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
