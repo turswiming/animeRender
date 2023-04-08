@@ -1,0 +1,42 @@
+# General C++ build artifacts
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dll
+*.exe
+*.dylib
+*.out
+*.app
+*.dSYM
+*.pdb
+
+# CMake build directories
+cmake-build-debug/
+
+build/
+_build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+*.cmake
+
+# Compile commands database
+compile_commands.json
+
+# C++ IDEs and editors
+.vs/
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+*.code-workspace
+
+# macOS artifacts
+.DS_Store
+*.swp
+*.swo
+
+# Ignore the GLFW dependencies in the 'external' directory
+/external/glfw/
