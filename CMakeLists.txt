@@ -1,32 +1,29 @@
 cmake_minimum_required(VERSION 3.25)
+
 project(AnimeRenderer VERSION 2.1)
+configure_file(TutorialConfig.h.in TutorialConfig.h)
+
 set(CMAKE_CXX_STANDARD 11)
 
-
-# Add GLFW and glad as a subdirectory
+# Add GLFW and glad as subdirectories
 add_subdirectory(external/glfw)
 add_subdirectory(external/glad)
 
-# Create the main executable
-#add_executable(${PROJECT_NAME} main.cpp)
+# List all source files explicitly
+set(SOURCES
+        main.cpp
+        main2.cpp
+        # Add more source files as necessary
+        )
 
-# Link against GLFW and glad
-#target_link_libraries(${PROJECT_NAME} glfw glad)
-# Find all main*.cpp files and store in list mains
-file(GLOB_RECURSE mains RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
-foreach(mainfile IN LISTS mains)
-    configure_file(TutorialConfig.h.in TutorialConfig.h)
-
-
-    # Include GLFW headers
-    include_directories(${GLFW_INCLUDE_DIRS})
-    # Get file name without directory
-    get_filename_component(main-name ${mainfile} NAME_WE)
-    add_executable(${main-name} ${mainfile})
+# Create an executable for each source file
+foreach(SOURCE ${SOURCES})
+    # Extract the file name without the extension
+    get_filename_component(EXECUTABLE_NAME ${SOURCE} NAME_WE)
+    # Create an executable with the same name as the source file
+    add_executable(${EXECUTABLE_NAME} ${SOURCE})
     # Link against GLFW and glad
-    target_link_libraries(${main-name} glfw glad)
-    #add include files
-    target_include_directories(${main-name} PUBLIC
-            ${PROJECT_BINARY_DIR}
-            )
+    target_link_libraries(${EXECUTABLE_NAME} glfw glad)
+    # Add include files
+    target_include_directories(${EXECUTABLE_NAME} PUBLIC ${PROJECT_BINARY_DIR})
 endforeach()
