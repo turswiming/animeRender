@@ -13,6 +13,7 @@ add_subdirectory(external/glad)
 set(SOURCES
         main.cpp
         main2.cpp
+        main3_shader.cpp
         # Add more source files as necessary
         )
 
@@ -21,7 +22,7 @@ foreach(SOURCE ${SOURCES})
     # Extract the file name without the extension
     get_filename_component(EXECUTABLE_NAME ${SOURCE} NAME_WE)
     # Create an executable with the same name as the source file
-    add_executable(${EXECUTABLE_NAME} ${SOURCE})
+    add_executable(${EXECUTABLE_NAME} ${SOURCE} module/shader/Shader.cpp module/shader/Shader.h)
     # Link against GLFW and glad
     target_link_libraries(${EXECUTABLE_NAME} glfw glad)
     # Add include files
