@@ -16,7 +16,7 @@ set(SOURCES
         main3_shader.cpp
         # Add more source files as necessary
         )
-
+file(COPY Shaders DESTINATION  ${PROJECT_BINARY_DIR})
 # Create an executable for each source file
 foreach(SOURCE ${SOURCES})
     # Extract the file name without the extension
