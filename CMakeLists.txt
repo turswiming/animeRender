@@ -14,15 +14,21 @@ set(SOURCES
         main.cpp
         main2.cpp
         main3_shader.cpp
+        main4_texture.cpp
         # Add more source files as necessary
         )
-file(COPY Shaders DESTINATION  ${PROJECT_BINARY_DIR})
+file(
+        COPY
+        Shaders
+        Images
+        DESTINATION  ${PROJECT_BINARY_DIR})
 # Create an executable for each source file
 foreach(SOURCE ${SOURCES})
     # Extract the file name without the extension
     get_filename_component(EXECUTABLE_NAME ${SOURCE} NAME_WE)
+    include_directories(external/stb)
     # Create an executable with the same name as the source file
-    add_executable(${EXECUTABLE_NAME} ${SOURCE} module/shader/Shader.cpp module/shader/Shader.h)
+    add_executable(${EXECUTABLE_NAME} ${SOURCE} module/shader/Shader.cpp external/stb/stb_image.h)
     # Link against GLFW and glad
     target_link_libraries(${EXECUTABLE_NAME} glfw glad)
     # Add include files
