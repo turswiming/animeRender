@@ -10,8 +10,6 @@ add_subdirectory(external/glfw)
 add_subdirectory(external/glad)
 add_subdirectory(external/glm)
 
-# Include the glm headers
-target_include_directories(main3_shader PUBLIC external/glm)
 
 add_library(stb_image INTERFACE)
 target_include_directories(stb_image INTERFACE external/stb)
@@ -23,6 +21,8 @@ set(SOURCES
         main2.cpp
         main3_shader.cpp
         main4_texture.cpp
+        main5_math.cpp
+        main6_space.cpp
         # Add more source files as necessary
         )
 file(

@@ -103,3 +103,7 @@ void Shader::setFloat(const std::string &name, float value) const
 void Shader::setTexture(const std::string &name,float value)const
 {
 }
+void Shader::setMatrix(const std::string &name,glm::mat4 trans )const{
+    unsigned int transformLoc =glGetUniformLocation(ID, name.c_str());
+    glUniformMatrix4fv(transformLoc,1,GL_FALSE,glm::value_ptr(trans));
+}

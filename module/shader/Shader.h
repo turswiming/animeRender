@@ -9,6 +9,9 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 class Shader{
 public:
     unsigned int ID;
@@ -19,6 +22,7 @@ public:
     void setInt(const std::string &name,int value)const;
     void setFloat(const std::string &name,float value)const;
     void setTexture(const std::string &name,float value)const;
+    void setMatrix(const std::string &name,glm::mat4 trans )const;
 
 };
 #endif //ANIMERENDERER_SHADER_H
