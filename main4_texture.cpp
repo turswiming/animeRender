@@ -8,9 +8,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include "module/shader/Shader.h"
+#include "module/texture/texture.h"
 #include "TutorialConfig.h"
-#define STB_IMAGE_IMPLEMENTATION
-#include <stb_image.h>
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
@@ -51,11 +50,7 @@ int main() {
             0, 1, 2,   // first triangle
             0, 2, 3   // second triangle
     };
-    float texCoords[] = {
-            0.0f, 0.0f,  // lower-left corner
-            1.0f, 0.0f,  // lower-right corner
-            0.5f, 1.0f   // top-center corner
-    };
+
     Shader *shader =new Shader("Shaders/chapter1/readtexture.vs.glsl","Shaders/chapter1/readtexture.fs.glsl");
 
 #define size 1
@@ -88,26 +83,16 @@ int main() {
         glBindVertexArray(0);
     }
 
+    Texture texture = Texture("Images/container.jpg");
+    Texture texture2 = Texture("Images/awesomeface.png");
+    shader->use();
+    glActiveTexture(GL_TEXTURE0);
+    texture.setToShaderProgram(GL_TEXTURE0);
+    glActiveTexture(GL_TEXTURE1);
+    texture2.setToShaderProgram(GL_TEXTURE1);
+    shader->setInt("ourTexture1", 0); // or with shader class
 
-    int width, height, nrChannels;
-    unsigned char *data = stbi_load("Images/container.jpg",&width,&height,&nrChannels,0);
-    unsigned int texture;
-
-    if(data){
-        glGenTextures(1,&texture);
-        glBindTexture(GL_TEXTURE_2D,texture);
-        glTexImage2D(GL_TEXTURE_2D,0,GL_RGB, width,height,0,GL_RGB,GL_UNSIGNED_BYTE,data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-
-    }else{
-        std::cout<<"Failed to load texture: "<< "Images/container.jpg"<<std::endl;
-        return -1;
-    }
-    stbi_image_free(data);
+    shader->setInt("ourTexture2", 1); // or with shader class
 
     while(!glfwWindowShouldClose(window))
     {
@@ -121,11 +106,9 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT);
 
         // draw our first triangle
-        shader->use();
-        for (int i = 0; i < size; i++) {
-            glActiveTexture(GL_TEXTURE1);
 
-            glBindTexture(GL_TEXTURE_2D,texture);
+        for (int i = 0; i < size; i++) {
+
 
             glBindVertexArray(VAOs[i]);
             // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
@@ -142,7 +125,7 @@ int main() {
     // ------------------------------------------------------------------------
     glDeleteVertexArrays(2, VAOs);
     glDeleteBuffers(2, VBOs);
-//    glDeleteBuffers(2,EBOs);
+    glDeleteBuffers(1,&EBO);
     delete shader;
     glfwTerminate();
     std::cout << "renderer exit normally" << std::endl;
